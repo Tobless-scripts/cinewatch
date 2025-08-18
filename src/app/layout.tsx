@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import Navbar from "@/components/NavFooterComp/Navbar";
+import Footer from "@/components/NavFooterComp/Footer";
 
 export const metadata: Metadata = {
     title: "CineWatch | Stream and Book Tickets in one place",
@@ -14,7 +16,11 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en">
-            <body>{children}</body>
+            <body>
+                <Navbar />
+                {children}
+                <Footer />
+            </body>
         </html>
     );
 }

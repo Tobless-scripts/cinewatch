@@ -29,7 +29,7 @@ _Cine Watch_ is a modern full-stack web application built with _Next.js 15 App R
 To get started, clone the project locally:
 
 ```bash
-git clone https://github.com/your-username/cinewatch.git
+git clone https://github.com/Tobless-scripts/cinewatch.git
 cd cinewatch
 npm install
 npm run dev
