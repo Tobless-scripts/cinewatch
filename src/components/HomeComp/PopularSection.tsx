@@ -1,6 +1,5 @@
 import { fetchFromTMDB, getGenres } from "@/lib/tmdb";
 import { Movie } from "@/types/Movie";
-import Link from "next/link";
 import MovieCard from "../movie/MovieCard";
 
 interface Genre {

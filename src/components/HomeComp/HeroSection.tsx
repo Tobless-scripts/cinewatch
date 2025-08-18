@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { ChevronLeft, ChevronRight, Play, Calendar } from "lucide-react";
 import Image from "next/image";
 import { fetchFromTMDB } from "@/lib/tmdb";
@@ -42,6 +42,10 @@ export default function HeroSection() {
         getGenreList();
     }, []);
 
+    const nextSlide = useCallback(() => {
+        setCurrentIndex((prev) => (prev + 1) % movies.length);
+    }, [movies.length]);
+
     // Auto slide every 10s
     useEffect(() => {
         if (movies.length === 0) return;
@@ -49,7 +53,7 @@ export default function HeroSection() {
             nextSlide();
         }, 10000);
         return () => clearInterval(interval);
-    }, [movies]);
+    }, [movies, nextSlide]);
 
     // 👇 Scale background image on scroll
     useEffect(() => {
@@ -63,10 +67,6 @@ export default function HeroSection() {
         window.addEventListener("scroll", handleScroll);
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
-
-    const nextSlide = () => {
-        setCurrentIndex((prev) => (prev + 1) % movies.length);
-    };
 
     const prevSlide = () => {
         setCurrentIndex((prev) => (prev === 0 ? movies.length - 1 : prev - 1));

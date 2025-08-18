@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { fetchFromTMDB, getGenres } from "@/lib/tmdb";
 import { Movie } from "@/types/Movie";
 import MovieCard from "../movie/MovieCard";
@@ -56,32 +56,35 @@ export default function CategorySelector() {
     }, []);
 
     // Fetch movies for a category
-    const fetchMovies = async (cat: string) => {
-        setActive(cat);
-        setLoading(true);
-        try {
-            const genreId = genreMap[cat.toLowerCase()];
-            if (!genreId) return;
+    const fetchMovies = useCallback(
+        async (cat: string) => {
+            setActive(cat);
+            setLoading(true);
+            try {
+                const genreId = genreMap[cat.toLowerCase()];
+                if (!genreId) return;
 
-            const data = await fetchFromTMDB(
-                "/discover/movie",
-                `with_genres=${genreId}&sort_by=popularity.desc&page=1`
-            );
-            setMovies(data?.results?.slice(0, 15) || []);
-        } catch (error) {
-            console.error("Failed fetching movies:", error);
-            setMovies([]);
-        } finally {
-            setLoading(false);
-        }
-    };
+                const data = await fetchFromTMDB(
+                    "/discover/movie",
+                    `with_genres=${genreId}&sort_by=popularity.desc&page=1`
+                );
+                setMovies(data?.results?.slice(0, 15) || []);
+            } catch (error) {
+                console.error("Failed fetching movies:", error);
+                setMovies([]);
+            } finally {
+                setLoading(false);
+            }
+        },
+        [genreMap]
+    ); // depends on genreMap only
 
     // Load Action by default once genres are ready
     useEffect(() => {
         if (genreMap["action"] && active === "Action" && movies.length === 0) {
             fetchMovies("Action");
         }
-    }, [genreMap]);
+    }, [genreMap, active, movies.length, fetchMovies]);
 
     return (
         <div className="w-full px-6 md:px-18 py-8">
