@@ -5,7 +5,7 @@ export default async function PopularSection() {
     const moviesByGenre = await fetchUniqueMostPopularByGenre();
 
     return (
-        <section className="bg-[#0a1929] px-6 md:px-18 py-8">
+        <section className="bg-[#0a1929] px-6 md:px-18 py-18">
             <div className="mb-6">
                 <h2 className="text-2xl md:text-4xl font-bold text-white">
                     Popular on CineWatch

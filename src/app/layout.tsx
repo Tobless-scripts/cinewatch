@@ -7,6 +7,9 @@ export const metadata: Metadata = {
     title: "CineWatch | Stream and Book Tickets in one place",
     description:
         "Your one-stop destination for movies, trailers, and cinema tickets.",
+    icons: {
+        icon: "/favicon.ico",
+    },
 };
 
 export default function RootLayout({
