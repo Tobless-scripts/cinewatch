@@ -28,7 +28,7 @@ export default function UpcomingMovieCard({
                     alt={title}
                     width={500}
                     height={750}
-                    className="w-full h-[170px] lg:h-[300px] object-cover rounded-xl"
+                    className="w-full h-[190px] lg:h-[300px] object-cover rounded-xl"
                 />
 
                 {/* Overlay */}
@@ -39,7 +39,9 @@ export default function UpcomingMovieCard({
                     <span className="bg-cyan-500 text-xs px-2 py-1 rounded-sm font-bold md:text-sm">
                         Coming Soon
                     </span>
-                    <h3 className="text-lg font-bold mt-2">{title}</h3>
+                    <h3 className="text-sm md:text-lg font-bold mt-2">
+                        {title}
+                    </h3>
                     <p className="text-sm text-gray-300">
                         {new Date(release_date).toLocaleDateString("en-US", {
                             month: "short",
@@ -47,7 +49,7 @@ export default function UpcomingMovieCard({
                             year: "numeric",
                         })}
                     </p>
-                    <p className="text-sm mt-1">{genre}</p>
+                    <p className="text-xs md:text-sm mt-1">{genre}</p>
                 </div>
             </div>
         </Link>

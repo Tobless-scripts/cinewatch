@@ -114,7 +114,7 @@ export default function HeroSection() {
     const movie = movies[currentIndex];
 
     return (
-        <div className="w-full bg-[#0B1E36] h-[80vh]">
+        <div className="w-full bg-[#0B1E36] h-[55vh] lg:h-[80vh]">
             <div className="relative w-full h-full overflow-hidden">
                 {/* Background Image */}
                 <Image
@@ -122,7 +122,7 @@ export default function HeroSection() {
                     alt={movie.title}
                     width={1600}
                     height={600}
-                    className="w-full h-full object-full transition-transform duration-300"
+                    className="w-full h-full object-center transition-transform duration-300"
                     style={{ transform: `scale(${scale})` }}
                     priority
                 />
@@ -132,30 +132,30 @@ export default function HeroSection() {
 
                 {/* Content */}
                 <div className="absolute inset-0 px-6 md:px-18 flex items-center">
-                    <div className="text-white pt-10">
-                        <span className="bg-purple-600 px-3 py-1 rounded-full text-xs font-medium">
+                    <div className=" text-white pt-12 lg:pt-10">
+                        <span className="max-lg:hidden bg-purple-600 px-3 py-1 rounded-full text-xs font-medium">
                             Featured
                         </span>
 
-                        <h1 className="text-2xl md:text-5xl font-bold mt-4 leading-tight">
+                        <h1 className="text-sm md:text-base lg:text-5xl font-bold mt-4 leading-tight">
                             {movie.title}
                         </h1>
 
                         {/* ✅ Use dynamic tagline */}
                         {tagline && (
-                            <p className="italic text-lg text-gray-300 mt-2">
+                            <p className="italic text-xs md:text-sm lg:text-lg text-gray-300 mt-2">
                                 {tagline}
                             </p>
                         )}
 
-                        <div className="flex items-center gap-4 mt-4 text-sm">
+                        <div className="flex items-center gap-4 mt-4 text-xs md:text-sm">
                             <div className="flex items-center gap-1">
                                 <span className="text-cyan-400">⭐</span>
                                 <span className="text-white font-medium">
                                     {movie.vote_average.toFixed(1)} / 10
                                 </span>
                             </div>
-                            <div className="flex items-center gap-2 text-sm">
+                            <div className="flex items-center gap-2 text-xs md:text-sm">
                                 <Clock className="w-4 h-4" />
                                 <span>{runtime ?? "Loading..."}</span>
                             </div>
@@ -164,7 +164,7 @@ export default function HeroSection() {
                             </span>
                         </div>
 
-                        <div className="flex gap-2 mt-3 flex-wrap">
+                        <div className="flex gap-2 mt-2 md:mt-3 flex-wrap">
                             {movie.genre_ids?.slice(0, 3).map((id: number) => (
                                 <span
                                     key={id}
@@ -175,18 +175,18 @@ export default function HeroSection() {
                             ))}
                         </div>
 
-                        <p className="mt-6 text-gray-200 text-xs leading-relaxed max-w-lg line-clamp-2">
+                        <p className="mt-2 md:mt-6 text-gray-200 text-xs leading-relaxed max-w-lg line-clamp-2">
                             {movie.overview}
                         </p>
 
-                        <div className="flex flex-col md:flex-row gap-4 mt-8">
+                        <div className="flex flex-wrap gap-4 mt-2 md:mt-4 lg:mt-8">
                             <Link href={`movies/${movie.id}`}>
-                                <button className="flex items-center gap-2 max-w-fit bg-[#06b6d4] hover:bg-cyan-600 px-6 py-3 rounded-md font-medium text-white transition-colors cursor-pointer">
+                                <button className="flex items-center max-sm:text-xs max-md:text-sm gap-2 max-w-fit bg-[#06b6d4] hover:bg-cyan-600 px-6 py-1.5 md:py-2 lg:py-3 rounded-md font-medium text-white transition-colors cursor-pointer">
                                     <Play size={18} fill="white" />
                                     Watch Trailer
                                 </button>
                             </Link>
-                            <button className="flex items-center gap-2 max-w-fit bg-[#1f2937] hover:bg-gray-800/50 px-6 py-3 rounded-md font-medium text-white transition-colors cursor-pointer">
+                            <button className="flex items-center max-sm:text-xs max-md:text-sm gap-2 max-w-fit bg-[#1f2937] hover:bg-gray-800/50 px-6 py-1.5 md:py-2 lg:py-3  rounded-md font-medium text-white transition-colors cursor-pointer">
                                 <Calendar size={18} />
                                 Book Tickets
                             </button>
