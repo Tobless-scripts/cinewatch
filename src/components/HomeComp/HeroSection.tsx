@@ -106,14 +106,14 @@ export default function HeroSection() {
 
     return (
         <div className="w-full bg-[#0B1E36] h-[50vh] md:h-[40vh] lg:h-[80vh]">
-            <div className="relative w-full h-full overflow-hidden">
+            <div className="relative w-full h-full overflow-hidden pt-14">
                 {/* Background Image */}
                 <Image
                     src={`https://image.tmdb.org/t/p/original${movie.backdrop_path}`}
                     alt={movie.title}
                     width={1600}
                     height={600}
-                    className="w-full h-full object-center transition-transform duration-300"
+                    className="w-full h-full object-top transition-transform duration-300"
                     style={{ transform: `scale(${scale})` }}
                     priority
                 />

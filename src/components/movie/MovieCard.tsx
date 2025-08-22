@@ -79,7 +79,7 @@ export default function MovieCard({
                         alt={title}
                         width={300}
                         height={400}
-                        className="w-full h-[170px] lg:h-[300px] object-cover rounded-xl"
+                        className="w-full h-[170px] lg:h-[300px] object-top rounded-xl"
                     />
                 ) : (
                     <div className="w-full h-[170px] lg:h-[300px] bg-gray-700 flex items-center justify-center rounded-xl text-gray-400">
