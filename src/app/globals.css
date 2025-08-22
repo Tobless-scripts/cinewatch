@@ -27,6 +27,7 @@ body {
 
 @theme {
     --breakpoint-xs: 360px;
+    --breakpoint-sxs: 325px;
 }
 
 /* Hide scrollbar but keep scroll */

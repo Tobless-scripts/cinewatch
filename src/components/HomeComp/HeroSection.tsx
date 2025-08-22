@@ -137,13 +137,13 @@ export default function HeroSection() {
                             Featured
                         </span>
 
-                        <h1 className="text-sm md:text-base lg:text-5xl font-bold mt-4 leading-tight">
+                        <h1 className="text-md md:text-base lg:text-5xl font-bold mt-4 leading-tight">
                             {movie.title}
                         </h1>
 
                         {/* ✅ Use dynamic tagline */}
                         {tagline && (
-                            <p className="italic text-xs md:text-sm lg:text-lg text-gray-300 mt-2">
+                            <p className="max-sxs:hidden italic text-xs md:text-sm lg:text-lg text-gray-300 mt-2">
                                 {tagline}
                             </p>
                         )}
@@ -175,18 +175,18 @@ export default function HeroSection() {
                             ))}
                         </div>
 
-                        <p className="mt-2 md:mt-6 text-gray-200 text-xs leading-relaxed max-w-lg line-clamp-2">
+                        <p className="max-sxs:hidden mt-2 md:mt-6 text-gray-200 text-xs leading-relaxed max-w-lg line-clamp-2">
                             {movie.overview}
                         </p>
 
                         <div className="flex flex-wrap gap-4 mt-2 md:mt-4 lg:mt-8">
                             <Link href={`movies/${movie.id}`}>
-                                <button className="flex items-center max-sm:text-xs max-md:text-sm gap-2 max-w-fit bg-[#06b6d4] hover:bg-cyan-600 px-6 py-1.5 md:py-2 lg:py-3 rounded-md font-medium text-white transition-colors cursor-pointer">
+                                <button className="flex items-center max-sm:text-xs max-md:text-sm gap-2 max-w-fit bg-[#06b6d4] hover:bg-cyan-600 px-6 py-2 lg:py-3 rounded-md font-medium text-white transition-colors cursor-pointer">
                                     <Play size={18} fill="white" />
                                     Watch Trailer
                                 </button>
                             </Link>
-                            <button className="flex items-center max-sm:text-xs max-md:text-sm gap-2 max-w-fit bg-[#1f2937] hover:bg-gray-800/50 px-6 py-1.5 md:py-2 lg:py-3  rounded-md font-medium text-white transition-colors cursor-pointer">
+                            <button className="flex items-center max-sm:text-xs max-md:text-sm gap-2 max-w-fit bg-[#1f2937] hover:bg-gray-800/50 px-6 py-2 lg:py-3  rounded-md font-medium text-white transition-colors cursor-pointer">
                                 <Calendar size={18} />
                                 Book Tickets
                             </button>
