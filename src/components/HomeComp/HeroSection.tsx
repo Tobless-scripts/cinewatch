@@ -105,7 +105,7 @@ export default function HeroSection() {
     const movie = movies[currentIndex];
 
     return (
-        <div className="w-full bg-[#0B1E36] h-[50vh] md:h-[35vh] lg:h-[80vh]">
+        <div className="w-full bg-[#0B1E36] h-[50vh] md:h-[40vh] lg:h-[80vh]">
             <div className="relative w-full h-full overflow-hidden">
                 {/* Background Image */}
                 <Image
