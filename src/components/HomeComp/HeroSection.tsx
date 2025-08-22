@@ -85,15 +85,6 @@ export default function HeroSection() {
     }, [movies, nextSlide]);
 
     useEffect(() => {
-        fetch("/api/cinemas")
-            .then((res) => res.json())
-            .then((data) => {
-                console.log(data);
-            })
-            .catch((err) => console.error("Error fetching cinemas:", err));
-    }, []);
-
-    useEffect(() => {
         const handleScroll = () => {
             const scrollY = window.scrollY;
             const newScale = Math.min(1 + scrollY / 1000, 1.3);
