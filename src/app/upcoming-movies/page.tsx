@@ -47,6 +47,7 @@ export default async function MoviesPage() {
                                 ? genreMap[movie.genre_ids[0]]
                                 : "N/A"
                         }
+                        movie={movie}
                     />
                 ))}
             </div>

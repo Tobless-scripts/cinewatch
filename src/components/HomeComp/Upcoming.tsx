@@ -1,7 +1,7 @@
 import { fetchFromTMDB, getGenres } from "@/lib/tmdb";
 import { Movie } from "@/types/Movie";
 import Link from "next/link";
-import MovieCard from "../movie/UpcomingMovieCard";
+import UpcomingMovieCard from "../movie/UpcomingMovieCard";
 
 interface Genre {
     id: number;
@@ -22,7 +22,7 @@ export default async function UpcomingSection() {
     );
 
     return (
-        <section className="bg-[#0b1620] px-6 md:px-18 py-8">
+        <section className="bg-[#0a1929] px-6 md:px-18 py-8">
             <div className="flex justify-between items-center mb-6">
                 <h2 className="text-2xl md:text-4xl font-bold text-white">
                     Coming Soon
@@ -41,7 +41,7 @@ export default async function UpcomingSection() {
                         key={movie.id}
                         className="w-64 flex-shrink-0 cursor-pointer"
                     >
-                        <MovieCard
+                        <UpcomingMovieCard
                             id={movie.id}
                             title={movie.title}
                             poster_path={movie.poster_path}
@@ -51,6 +51,7 @@ export default async function UpcomingSection() {
                                     ? genreMap[movie.genre_ids[0]]
                                     : "N/A"
                             }
+                            movie={movie}
                         />
                     </div>
                 ))}

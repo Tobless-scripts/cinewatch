@@ -1,24 +1,55 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import { ChevronLeft, ChevronRight, Play, Calendar } from "lucide-react";
+import { ChevronLeft, ChevronRight, Play, Calendar, Clock } from "lucide-react";
 import Image from "next/image";
-import { fetchFromTMDB } from "@/lib/tmdb";
+import { fetchFromTMDB, fetchMovieDetails } from "@/lib/tmdb";
 import { Genre, Movie } from "@/types/Movie";
+import Link from "next/link";
 
 export default function HeroSection() {
     const [movies, setMovies] = useState<Movie[]>([]);
     const [genres, setGenres] = useState<Record<number, string>>({});
     const [currentIndex, setCurrentIndex] = useState(0);
     const [scale, setScale] = useState(1);
+    const [runtime, setRuntime] = useState<string | null>(null);
+    const [tagline, setTagline] = useState<string>(""); // <-- tagline state
 
+    // Fetch runtime and tagline whenever current movie changes
+    useEffect(() => {
+        if (!movies.length) return;
+
+        const loadMovieDetails = async (): Promise<void> => {
+            try {
+                const movieId = movies[currentIndex].id;
+                const details = await fetchMovieDetails(movieId);
+
+                // runtime
+                if (details?.runtime) {
+                    const hours = Math.floor(details.runtime / 60);
+                    const minutes = details.runtime % 60;
+                    setRuntime(`${hours}h ${minutes}m`);
+                } else setRuntime("N/A");
+
+                // tagline
+                setTagline(details?.tagline || ""); // <-- set tagline dynamically
+            } catch {
+                setRuntime("N/A");
+                setTagline("");
+            }
+        };
+
+        loadMovieDetails();
+    }, [movies, currentIndex]);
+
+    // Fetch trending movies and genres
     useEffect(() => {
         const getMovies = async () => {
             const data = await fetchFromTMDB(
                 "/trending/movie/day",
                 "language=en-US&page=1"
             );
-            if (data?.results) setMovies(data.results.slice(0, 5));
+            if (data?.results) setMovies(data.results.slice(0, 6));
         };
 
         const getGenreList = async () => {
@@ -49,17 +80,22 @@ export default function HeroSection() {
     // Auto slide every 10s
     useEffect(() => {
         if (movies.length === 0) return;
-        const interval = setInterval(() => {
-            nextSlide();
-        }, 10000);
+        const interval = setInterval(() => nextSlide(), 10000);
         return () => clearInterval(interval);
     }, [movies, nextSlide]);
 
-    // 👇 Scale background image on scroll
+    useEffect(() => {
+        fetch("/api/cinemas")
+            .then((res) => res.json())
+            .then((data) => {
+                console.log(data);
+            })
+            .catch((err) => console.error("Error fetching cinemas:", err));
+    }, []);
+
     useEffect(() => {
         const handleScroll = () => {
             const scrollY = window.scrollY;
-            // Cap scale at 1.3 so it doesn’t grow endlessly
             const newScale = Math.min(1 + scrollY / 1000, 1.3);
             setScale(newScale);
         };
@@ -80,7 +116,7 @@ export default function HeroSection() {
     return (
         <div className="w-full bg-[#0B1E36] h-[80vh]">
             <div className="relative w-full h-full overflow-hidden">
-                {/* Background Image with dynamic scale */}
+                {/* Background Image */}
                 <Image
                     src={`https://image.tmdb.org/t/p/original${movie.backdrop_path}`}
                     alt={movie.title}
@@ -91,7 +127,7 @@ export default function HeroSection() {
                     priority
                 />
 
-                {/* Dark Overlay */}
+                {/* Overlay */}
                 <div className="absolute inset-0 bg-gradient-to-r from-[#0B1E36] via-[#0B1E36]/80 to-transparent"></div>
 
                 {/* Content */}
@@ -105,9 +141,12 @@ export default function HeroSection() {
                             {movie.title}
                         </h1>
 
-                        <p className="italic text-lg text-gray-300 mt-2">
-                            Beyond fear, destiny awaits
-                        </p>
+                        {/* ✅ Use dynamic tagline */}
+                        {tagline && (
+                            <p className="italic text-lg text-gray-300 mt-2">
+                                {tagline}
+                            </p>
+                        )}
 
                         <div className="flex items-center gap-4 mt-4 text-sm">
                             <div className="flex items-center gap-1">
@@ -116,7 +155,10 @@ export default function HeroSection() {
                                     {movie.vote_average.toFixed(1)} / 10
                                 </span>
                             </div>
-                            <span className="text-gray-300">2h 46m</span>
+                            <div className="flex items-center gap-2 text-sm">
+                                <Clock className="w-4 h-4" />
+                                <span>{runtime ?? "Loading..."}</span>
+                            </div>
                             <span className="text-gray-300">
                                 {movie.release_date?.slice(0, 4)}
                             </span>
@@ -138,10 +180,12 @@ export default function HeroSection() {
                         </p>
 
                         <div className="flex flex-col md:flex-row gap-4 mt-8">
-                            <button className="flex items-center gap-2 max-w-fit bg-[#06b6d4] hover:bg-cyan-600 px-6 py-3 rounded-md font-medium text-white transition-colors cursor-pointer">
-                                <Play size={18} fill="white" />
-                                Watch Trailer
-                            </button>
+                            <Link href={`movies/${movie.id}`}>
+                                <button className="flex items-center gap-2 max-w-fit bg-[#06b6d4] hover:bg-cyan-600 px-6 py-3 rounded-md font-medium text-white transition-colors cursor-pointer">
+                                    <Play size={18} fill="white" />
+                                    Watch Trailer
+                                </button>
+                            </Link>
                             <button className="flex items-center gap-2 max-w-fit bg-[#1f2937] hover:bg-gray-800/50 px-6 py-3 rounded-md font-medium text-white transition-colors cursor-pointer">
                                 <Calendar size={18} />
                                 Book Tickets

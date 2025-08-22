@@ -21,7 +21,7 @@ export default async function TrendingSection() {
     );
 
     return (
-        <section className="bg-[#0b1620] px-6 md:px-18 py-8">
+        <section className="bg-[#0a1929] px-6 md:px-18 py-8">
             <div className="flex justify-between items-center mb-6">
                 <h2 className="text-2xl md:text-4xl font-bold text-white">
                     Trending Now
@@ -48,6 +48,8 @@ export default async function TrendingSection() {
                                     : "N/A"
                             }
                             vote_average={movie.vote_average}
+                            movie={movie}
+                            source="trending"
                         />
                     </div>
                 ))}

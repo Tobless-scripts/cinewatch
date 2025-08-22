@@ -48,6 +48,8 @@ export default async function MoviesPage() {
                                 : "N/A"
                         }
                         vote_average={movie.vote_average}
+                        movie={movie}
+                        source="trending"
                     />
                 ))}
             </div>

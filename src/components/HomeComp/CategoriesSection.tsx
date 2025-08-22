@@ -136,6 +136,8 @@ export default function CategorySelector() {
                                     : "N/A"
                             }
                             vote_average={movie.vote_average}
+                            movie={movie}
+                            source="category"
                         />
                     ))}
                 </div>
