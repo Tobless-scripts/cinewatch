@@ -78,7 +78,7 @@ export default function Navbar() {
     };
 
     return (
-        <header className="fixed inset-x-0 top-0 px-6 md:px-19 z-50 bg-[#0B1E36] text-white shadow-md">
+        <header className="fixed inset-x-0 top-0 px-6 md:px-18 z-50 bg-[#08275b] text-white shadow-md">
             <div className="flex h-16 items-center justify-between">
                 {/* Logo */}
                 <Link
@@ -182,7 +182,7 @@ export default function Navbar() {
                     aria-expanded={open}
                     aria-controls="mobile-menu"
                     onClick={() => setOpen((v) => !v)}
-                    className="inline-flex items-center justify-center p-2 md:hidden cursor-pointer"
+                    className="inline-flex items-center justify-center md:hidden cursor-pointer"
                 >
                     {open ? (
                         <X className="h-6 w-6" />

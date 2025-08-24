@@ -1,9 +1,7 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import Image from "next/image";
-import { Clock, Star } from "lucide-react";
-import { fetchMovieDetails } from "@/lib/tmdb";
+import { Star } from "lucide-react";
 import Link from "next/link";
 import { Movie, Movies } from "@/types/Movie";
 import { useMovieTracking } from "@/hooks/useMovieTracking";
@@ -26,104 +24,60 @@ interface MovieCardProps {
 }
 
 export default function MovieCard({
-    id,
     title,
     poster_path,
-    release_date,
-    genre,
     movie,
     vote_average,
     source,
 }: MovieCardProps) {
-    const [hovered, setHovered] = useState(false);
-    const [runtime, setRuntime] = useState<string | null>(null);
     const { trackMovieClick } = useMovieTracking({ source });
 
     const handleClick = (e: React.MouseEvent) => {
-        e.preventDefault(); // Prevent Link navigation
-        trackMovieClick(movie); // This will handle navigation internally
+        e.preventDefault();
+        trackMovieClick(movie);
     };
 
-    // Fetch runtime when card mounts
-    useEffect(() => {
-        const loadRuntime = async () => {
-            try {
-                const details = await fetchMovieDetails(id);
-                if (details?.runtime) {
-                    const hours = Math.floor(details.runtime / 60);
-                    const minutes = details.runtime % 60;
-                    setRuntime(`${hours}h ${minutes}m`);
-                } else {
-                    setRuntime("N/A");
-                }
-            } catch {
-                setRuntime("N/A");
-            }
-        };
-
-        loadRuntime();
-    }, [id]);
-
     return (
-        <Link href={`movies/${movie.id}`}>
-            <div
-                className="relative w-full flex-shrink-0 cursor-pointer rounded-xl overflow-hidden group transition-transform duration-300 hover:scale-105"
-                onMouseEnter={() => setHovered(true)}
-                onMouseLeave={() => setHovered(false)}
-                onClick={handleClick}
-            >
+        <Link href={`movies/${movie.id}`} onClick={handleClick}>
+            <div className="relative w-full aspect-[2/3] rounded-xl overflow-hidden shadow-xl group cursor-pointer transition-transform duration-300">
                 {/* Poster */}
                 {poster_path ? (
                     <Image
                         src={`https://image.tmdb.org/t/p/w500${poster_path}`}
                         alt={title}
-                        width={300}
-                        height={400}
-                        className="w-full h-[170px] lg:h-[300px] object-top rounded-xl"
+                        fill
+                        className="object-cover"
                     />
                 ) : (
-                    <div className="w-full h-[170px] lg:h-[300px] bg-gray-700 flex items-center justify-center rounded-xl text-gray-400">
+                    <div className="w-full h-full bg-gray-700 flex items-center justify-center text-gray-400">
                         No Image
                     </div>
                 )}
 
-                {/* Hover Overlay */}
-                {hovered && (
-                    <div className="absolute inset-0 bg-gradient-to-b from-[#0B1E36] via-[#0B1E36]/80 to-[#0b1e36] text-white flex flex-col justify-end p-4 transition-opacity duration-300 rounded-xl">
-                        {/* Rating */}
-                        <div className="absolute top-4 left-4 flex items-center gap-2 bg-black/30 rounded-full px-3 py-1">
-                            <Star className="w-4 h-4 text-yellow-400 fill-yellow-400" />
-                            <span className="text-sm font-bold">
-                                {vote_average != null
-                                    ? vote_average.toFixed(1)
-                                    : "N/A"}
-                            </span>
-                        </div>
+                {/* Gradient Overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent opacity-100 group-hover:opacity-100 transition-opacity duration-300" />
 
-                        {/* Runtime */}
-                        <div className="flex items-center gap-2 text-sm">
-                            <Clock className="w-4 h-4" />
-                            <span>{runtime ?? "Loading..."}</span>
-                        </div>
-
-                        {/* Watch Now button */}
-                        <button className="mt-3 bg-cyan-400 hover:bg-cyan-300 text-black px-3 sm:px-6 py-3 rounded-lg text-sm font-bold transition-all duration-200 transform hover:scale-105 shadow-lg w-full cursor-pointer">
-                            Watch Now
-                        </button>
+                {/* Info at bottom */}
+                <div className="absolute bottom-0 w-full p-4 text-white">
+                    {/* Rating */}
+                    <div className="hidden sm:flex items-center gap-2 mb-1">
+                        <Star className="w-4 h-4 text-yellow-400 fill-yellow-400" />
+                        <span className="text-sm font-semibold">
+                            {vote_average != null
+                                ? vote_average.toFixed(1)
+                                : "N/A"}
+                        </span>
                     </div>
-                )}
 
-                {/* Title & Info */}
-                <div className="mt-2 text-center">
-                    <h3 className="text-white font-semibold truncate">
+                    {/* Title */}
+                    <h3 className="text-xs md:text-base font-normal md:font-bold line-clamp-2">
                         {title}
                     </h3>
-                    <p className="text-gray-400 text-sm">
-                        {release_date
-                            ? new Date(release_date).getFullYear()
-                            : "N/A"}{" "}
-                        • {genre || "Unknown"}
-                    </p>
+
+                    {/* Watch button */}
+                    <button className="mt-3 w-full bg-cyan-400 hover:bg-cyan-300 text-black font-semibold py-2 rounded-lg text-sm transition-all duration-200 transform cursor-pointer">
+                        Watch Now
+                    </button>
                 </div>
             </div>
         </Link>

@@ -28,7 +28,7 @@ export default function UpcomingMovieCard({
                     alt={title}
                     width={500}
                     height={750}
-                    className="w-full h-[190px] lg:h-[300px] object-cover rounded-xl"
+                    className="w-full h-[250px] lg:h-[300px] object-top rounded-xl"
                 />
 
                 {/* Overlay */}

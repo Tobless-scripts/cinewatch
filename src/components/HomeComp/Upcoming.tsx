@@ -14,7 +14,7 @@ export default async function UpcomingSection() {
 
     const movies = data?.results || [];
 
-    const previewMovies = movies.slice(0, 8);
+    const previewMovies = movies.slice(0, 16);
 
     const genreMap = genres.reduce(
         (map, g) => ({ ...map, [g.id]: g.name }),
@@ -22,7 +22,7 @@ export default async function UpcomingSection() {
     );
 
     return (
-        <section className="bg-[#0a1929] px-6 md:px-18 py-8">
+        <section className="bg-[#08275b] px-6 md:px-18 py-8">
             <div className="flex justify-between items-center mb-6">
                 <h2 className="text-2xl md:text-4xl font-bold text-white">
                     Coming Soon

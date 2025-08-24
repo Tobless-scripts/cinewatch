@@ -105,7 +105,7 @@ export default function HeroSection() {
     const movie = movies[currentIndex];
 
     return (
-        <div className="w-full bg-[#0B1E36] h-[50vh] md:h-[40vh] lg:h-[80vh]">
+        <div className="w-full bg-[#0B1E36] h-[40vh] md:h-[40vh] lg:h-[80vh]">
             <div className="relative w-full h-full overflow-hidden pt-14">
                 {/* Background Image */}
                 <Image
@@ -134,7 +134,7 @@ export default function HeroSection() {
 
                         {/* ✅ Use dynamic tagline */}
                         {tagline && (
-                            <p className="max-sxs:hidden italic text-xs md:text-sm lg:text-lg text-gray-300 mt-2">
+                            <p className="max-sxs:hidden italic text-xs md:text-sm lg:text-lg text-gray-300 mt-2 line-clamp-1">
                                 {tagline}
                             </p>
                         )}
@@ -166,7 +166,7 @@ export default function HeroSection() {
                             ))}
                         </div>
 
-                        <p className="max-sxs:hidden mt-2 md:mt-6 text-gray-200 text-xs leading-relaxed max-w-lg line-clamp-2">
+                        <p className="max-sm:hidden mt-2 md:mt-6 text-gray-200 text-xs leading-relaxed max-w-lg line-clamp-2">
                             {movie.overview}
                         </p>
 

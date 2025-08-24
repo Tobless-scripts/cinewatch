@@ -12,7 +12,7 @@ export default async function PopularSection() {
     const genres: Genre[] = await getGenres();
 
     const movies = data?.results || [];
-    const previewMovies = movies.slice(0, 8); // Show only 8
+    const previewMovies = movies.slice(0, 16); // Show only 8
 
     const genreMap = genres.reduce(
         (map, g) => ({ ...map, [g.id]: g.name }),
@@ -20,7 +20,7 @@ export default async function PopularSection() {
     );
 
     return (
-        <section className="bg-[#0a1929] px-6 md:px-18 py-8">
+        <section className="bg-[#08275b] px-6 md:px-18 py-8">
             <div className="mb-6">
                 <h2 className="text-2xl md:text-4xl font-bold text-white">
                     Popular This Week
@@ -29,7 +29,7 @@ export default async function PopularSection() {
 
             <div className="flex gap-6 overflow-x-auto no-scrollbar scrollbar-hide mx-auto">
                 {previewMovies.map((movie: Movie) => (
-                    <div key={movie.id} className="w-48 flex-shrink-0">
+                    <div key={movie.id} className="w-44 flex-shrink-0">
                         <MovieCard
                             id={movie.id}
                             title={movie.title}
